@@ -1,32 +1,16 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
-  "timezone": "Europe/Madrid",
-  "labels": ["dependencies", "\uD83D\uDCE6 dependencies"],
-  "schedule": ["before 10am on monday"],
-  "rangeStrategy": "bump",
-  "dependencyDashboard": true,
-  "lockFileMaintenance": { "enabled": true, "schedule": ["before 10am on monday"] },
+  "extends": [
+    "local>Iniciativas-Alexendros/infraestructura-stack:renovate-presets/default",
+    "local>Iniciativas-Alexendros/infraestructura-stack:renovate-presets/node"
+  ],
+  "labels": ["dependencies"],
   "packageRules": [
-    {
-      "matchDepTypes": ["devDependencies"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "groupName": "dev deps (non-major)",
-      "automerge": true
-    },
-    {
-      "matchDepTypes": ["dependencies"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "groupName": "prod deps (non-major)",
-      "automerge": false
-    },
-    { "matchUpdateTypes": ["major"], "groupName": "major updates", "automerge": false },
     { "matchPackageNames": ["astro*", "@astrojs/*"], "groupName": "Astro" },
     { "matchPackageNames": ["payload", "@payloadcms/*"], "groupName": "Payload CMS" },
     { "matchPackageNames": ["react", "react-dom", "@types/react*"], "groupName": "React" },
     { "matchPackageNames": ["tailwindcss", "@tailwindcss/*"], "groupName": "Tailwind" },
     { "matchPackageNames": ["vitest", "@playwright/*", "playwright"], "groupName": "Testing" },
     { "matchPackageNames": ["sharp"], "allowedVersions": "<0.36.0" }
-  ],
-  "platformAutomerge": true
+  ]
 }
