@@ -1,5 +1,11 @@
 # Política de Seguridad — FRONT Valencia
 
+### Propósito de este documento
+
+- **Objetivos:** Declarar versiones soportadas, el canal privado de avisos y la superficie del sitio (Astro, Payload, reservas).
+- **Estructura:** Versiones soportadas → cómo reportar → medidas y alcance.
+- **Contenido a integrar según contexto:** Adapta contactos y hosting de FRONT Valencia. No copies la política de una CLI ni un desk de SaaS. No commitees `.env` ni claves. Las reservas de CoverManager no se reportan aquí.
+
 © Alejandro Domingo Agustí
 
 ## Versiones compatibles
@@ -14,10 +20,10 @@ Actualmente solo la versión publicada en producción (`main`) recibe actualizac
 
 ## Reportar una vulnerabilidad
 
-Si descubres una vulnerabilidad de seguridad en FRONT Valencia, **no** crees un issue público.  
-Por favor, escríbenos a:
+Si descubres una vulnerabilidad de seguridad en FRONT Valencia, **no** crees un issue público.
 
-**`seguridad@frontvalencia.com`** (placeholder — reemplazar por dirección real)
+1. Preferible: [GitHub Security Advisory](https://github.com/Iniciativas-Alexendros/website-frontvalencia/security/advisories/new) en este repositorio.
+2. Alternativa: correo a [operaciones@alexendros.dev](mailto:operaciones@alexendros.dev).
 
 ### Qué incluir en tu reporte
 
@@ -96,9 +102,7 @@ Se utiliza `validate:env` en CI para verificar que todas las variables requerida
 
 ### 7. Dependencias
 
-- Dependabot (`.github/dependabot.yml`) revisa semanalmente:
-  - Actualizaciones de seguridad de npm
-  - Acciones de GitHub
+- Renovate (`.github/renovate.json`) cubre `npm` y `github-actions`. No hay Dependabot de version-updates.
 - Los grupos de dependencias se actualizan juntos para minimizar riesgos de compatibilidad.
 - `sharp` está congelado en `>=0.35.3, <0.36.0` para evitar breaking changes en entornos serverless.
 
@@ -139,4 +143,4 @@ Policy: https://frontvalencia.com/security/
 
 ## Preguntas
 
-Para preguntas generales sobre seguridad, contacta a **seguridad@frontvalencia.com**.
+Para preguntas generales sobre seguridad, usa el advisory privado o [operaciones@alexendros.dev](mailto:operaciones@alexendros.dev). Atención de clientes del restaurante: [SUPPORT.md](SUPPORT.md).

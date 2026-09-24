@@ -7,6 +7,12 @@ Todos los cambios notables de **FRONT Valencia** se documentan aquí.
 
 ---
 
+## [Unreleased]
+
+### Cambiado
+
+- Alineación al canon de plataforma P1+P2: CI `quality` / `test` / `build` / `smoke`, Renovate (`npm` + `github-actions`), docs en `docs/architecture/decisions/`, meta-sección «Propósito de este documento».
+
 ## [1.0.0] — 2025-07-13
 
 ### Añadido

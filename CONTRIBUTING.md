@@ -1,5 +1,11 @@
 # Guía de Contribución — FRONT Valencia
 
+### Propósito de este documento
+
+- **Objetivos:** Explicar cómo clonar, desarrollar, testear y abrir un PR sin romper el producto ni los contratos de CI.
+- **Estructura:** Conducta → arranque → flujo → estilo → testing → PRs → ADRs → convenciones de CMS/web.
+- **Contenido a integrar según contexto:** Adapta scripts pnpm y rutas de este monorepo. No copies la guía de una CLI. Los ADRs canónicos están en `docs/architecture/decisions/`. Conserva el producto local.
+
 > **Idioma**: El código, nombres de variables, commits y comentarios técnicos se escriben en **inglés**.  
 > La documentación, issues y PRs pueden estar en **español** o **inglés**.
 
@@ -31,7 +37,7 @@ Al participar, aceptas mantener un entorno respetuoso y libre de acoso.
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/alexendros/website-frontvalencia.git
+git clone https://github.com/Iniciativas-Alexendros/website-frontvalencia.git
 cd website-frontvalencia
 ```
 
@@ -170,7 +176,9 @@ pnpm exec playwright test --ui   # modo interactivo
 
 - Unitarios: `coverage/unit/`
 - Totales: `coverage/`
-- Mínimo recomendado: 80% en utilidades compartidas
+- Objetivo de flota: **≥ 70 %**. Este repo aún no endurece el umbral en CI; añade tests antes de subirlo.
+
+CI principal: jobs `quality`, `test`, `build`, `smoke` (Playwright chromium sobre `apps/web/dist`).
 
 ---
 
@@ -178,11 +186,11 @@ pnpm exec playwright test --ui   # modo interactivo
 
 ### Proceso
 
-1. Crea una rama desde `develop` siguiendo la convención de nombres
+1. Crea una rama desde `main` siguiendo la convención de nombres
 2. Desarrolla con commits atómicos siguiendo Conventional Commits
-3. Asegura que `pnpm lint`, `pnpm typecheck` y `pnpm test` pasan
+3. Asegura que `pnpm --filter frontvalencia-web run lint`, `test:unit` y `build` pasan
 4. Sube la rama: `git push origin feat/mi-feature`
-5. Abre un Pull Request contra `develop`
+5. Abre un Pull Request contra `main`
 6. Completa la plantilla de PR (se genera automáticamente)
 7. Solicita al menos una review
 8. Tras aprobación, haz squash-merge
@@ -213,12 +221,12 @@ pnpm exec playwright test --ui   # modo interactivo
 
 ## Architecture Decision Records (ADRs)
 
-Las decisiones arquitectónicas significativas se documentan en `docs/adr/`.
+Las decisiones arquitectónicas significativas se documentan en `docs/architecture/decisions/`.
 
 ### Convención
 
-- Formato: `docs/adr/NNNN-titulo-breve.md`
-- Plantilla ([ADR-0000](docs/adr/0000-template.md)):
+- Formato: `docs/architecture/decisions/NNNN-titulo-breve.md`
+- Plantilla ([ADR-0000](docs/architecture/decisions/0000-template.md)):
   - **Title**, **Status**, **Date**
   - **Context**: problema o motivación
   - **Decision**: qué se decidió
