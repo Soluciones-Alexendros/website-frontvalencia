@@ -1,5 +1,11 @@
 # ADR 003: Estrategia de Fetch — SSG + ISR + Preview
 
+### Propósito de este documento
+
+- **Objetivos:** Registrar cómo Astro consume Payload (SSG, ISR, preview) sin acoplar el build de CI al CMS.
+- **Estructura:** Metadatos → contexto → decisión → consecuencias.
+- **Contenido a integrar según contexto:** Conserva la estrategia de producto. Un cambio de fetch exige un ADR nuevo.
+
 | Campo               | Valor                               |
 | ------------------- | ----------------------------------- |
 | **Fecha**           | 2026-07-13                          |

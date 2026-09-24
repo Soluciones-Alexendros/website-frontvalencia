@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Vulnerabilidad de seguridad
+    url: https://github.com/Iniciativas-Alexendros/website-frontvalencia/security/advisories/new
+    about: No abras un issue público. Usa un advisory privado o el correo de SECURITY.md.
+  - name: Atención del restaurante
+    url: https://frontvalencia.com
+    about: Reservas, carta y consultas de clientes. No uses GitHub para eso.

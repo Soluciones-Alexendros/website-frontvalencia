@@ -1,4 +1,8 @@
-name: CI — Lint, Build, Test
+name: CI
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 on:
   pull_request:
@@ -6,17 +10,17 @@ on:
   push:
     branches: [main]
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+permissions:
+  contents: read
 
 env:
   NODE_VERSION: '22'
 
 jobs:
-  lint:
-    name: Lint & Typecheck
+  quality:
+    name: quality
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v6
@@ -25,12 +29,30 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
-      - run: pnpm --filter frontvalencia-web run lint
+      - name: Lint & typecheck (Astro)
+        run: pnpm --filter frontvalencia-web run lint
+      - name: Format (contratos)
+        run: pnpm run format:check
+
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v5
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - name: Unit tests
+        run: pnpm --filter frontvalencia-web run test:unit
 
   build:
-    name: Build
-    needs: lint
+    name: build
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v6
@@ -42,11 +64,18 @@ jobs:
       - run: pnpm --filter frontvalencia-web build
       - name: Verify dist
         run: test -d apps/web/dist && echo "Build OK" || exit 1
+      - name: Upload web artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: frontvalencia-web-dist
+          path: apps/web/dist/
+          if-no-files-found: error
 
-  test:
-    name: Unit Tests
-    needs: lint
+  smoke:
+    name: smoke
+    needs: [build]
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v6
@@ -55,23 +84,20 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
-      - run: pnpm --filter frontvalencia-web run test:unit
-
-  e2e:
-    name: E2E & Accessibility
-    needs: lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      - uses: pnpm/action-setup@v6
-      - uses: actions/setup-node@v5
+      - name: Download web artifact
+        uses: actions/download-artifact@v7
         with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
-      - run: pnpm install --frozen-lockfile
+          name: frontvalencia-web-dist
+          path: apps/web/dist
+      - name: Verify static output
+        run: |
+          test -f apps/web/dist/es/index.html
+          test -f apps/web/dist/en/index.html
+          test -f apps/web/dist/robots.txt
+          echo "Smoke files OK"
       - name: Install Playwright browsers
         run: pnpm --filter frontvalencia-web exec playwright install --with-deps chromium
-      - name: Run Playwright tests
+      - name: Playwright smoke
         run: pnpm --filter frontvalencia-web exec playwright test --project=chromium
       - name: Upload report
         if: ${{ !cancelled() }}
@@ -80,3 +106,4 @@ jobs:
           name: playwright-report
           path: apps/web/playwright-report/
           retention-days: 7
+          if-no-files-found: ignore

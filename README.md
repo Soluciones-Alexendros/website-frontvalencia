@@ -1,5 +1,11 @@
 # FRONT Valencia
 
+### Propósito de este documento
+
+- **Objetivos:** Presentar el sitio público de FRONT Valencia, el stack (Astro + Payload) y los contratos de la raíz para humanos, CI y agentes.
+- **Estructura:** Identidad y badges → características y stack → inicio rápido y scripts → estructura → despliegue y comunidad.
+- **Contenido a integrar según contexto:** Adapta marca, URLs y scripts de este monorepo. No copies carta, assets, copy ni tokens visuales a otro sitio. Conserva el producto local.
+
 > Web oficial del restaurante **FRONT Valencia** — Restaurante y Terraza en La Marina de Valencia, frente al Mediterráneo.
 
 Sitio moderno, rápido y bilingüe (ES/EN), construido como monorepo con Astro + React en el frontend y Payload CMS para que el equipo edite carta, horarios e imágenes sin tocar código.
@@ -66,17 +72,21 @@ website-frontvalencia/
 │   ├── cms/            # Payload CMS (colecciones, acceso, plugins)
 │   └── web/            # Astro + React (páginas ES/EN, componentes, estilos)
 ├── packages/types/     # Tipos TypeScript compartidos
-├── docs/               # Documentación técnica y decisiones (ADR)
-└── .github/workflows/  # CI/CD y automatización de releases
+├── docs/               # ADRs (architecture/decisions), guías y runbooks
+└── .github/workflows/  # CI (quality/test/build/smoke) y releases
 ```
 
 ## Despliegue y releases
 
-Cada push a `main` ejecuta el pipeline (formato, tipos, tests, build) y despliega
+Cada push a `main` ejecuta el pipeline (`quality`, `test`, `build`, `smoke`) y despliega
 la web en Vercel. El versionado es automático con
 [Changesets](https://github.com/changesets/changesets): al mergear cambios con un
 changeset se abre un PR `ci: version packages` que, al fusionarse, actualiza la
 versión, el `CHANGELOG` y crea el tag y la GitHub Release correspondientes.
+
+**Contratos:** [AGENTS](AGENTS.md) · [ARCHITECTURE](ARCHITECTURE.md) · [DECISIONS](DECISIONS.md) · [docs/](docs/) · [CONTRIBUTING](CONTRIBUTING.md) · [SECURITY](SECURITY.md) · [SUPPORT](SUPPORT.md) · [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md)
+
+CI principal: jobs `quality`, `test`, `build`, `smoke`. Release (Changesets) y Lighthouse quedan en workflows aparte.
 
 ## Contribuir
 

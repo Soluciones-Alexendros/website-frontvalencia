@@ -1,5 +1,11 @@
 # Arquitectura — FRONT Valencia
 
+### Propósito de este documento
+
+- **Objetivos:** Describir el sistema (Astro + Payload + Postgres + R2), el flujo de datos y las decisiones de despliegue del producto local.
+- **Estructura:** Diagrama → justificación del stack → flujo → colecciones → seguridad → i18n → rendimiento.
+- **Contenido a integrar según contexto:** Adapta hosting y colecciones de FRONT Valencia. No copies la arquitectura de otro sitio. Los ADRs canónicos están en `docs/architecture/decisions/`.
+
 **Versión:** 1.0.0  
 **Última actualización:** Julio 2026  
 **Stack:** Payload CMS 3 + Astro 7 + React 19 + Tailwind v4 + Postgres + Turborepo
@@ -519,16 +525,14 @@ Si el tráfico crece significativamente, se puede añadir:
 
 ### CI Checks
 
-| Check          | Herramienta   | Cuándo se ejecuta  |
-| -------------- | ------------- | ------------------ |
-| Lint           | ESLint        | Cada push/PR       |
-| TypeScript     | tsc           | Cada push/PR       |
-| Unit tests     | Vitest        | Cada push/PR       |
-| E2E tests      | Playwright    | Cada push/PR       |
-| Build          | Turborepo     | Cada push/PR       |
-| Lighthouse     | Lighthouse CI | Tras build exitoso |
-| Accessibility  | axe-core      | En e2e tests       |
-| SEO validation | html-validate | Cada push/PR       |
+| Check         | Herramienta            | Cuándo se ejecuta |
+| ------------- | ---------------------- | ----------------- |
+| `quality`     | Astro check + Prettier | Cada push/PR      |
+| `test`        | Vitest                 | Cada push/PR      |
+| `build`       | Astro SSG              | Cada push/PR      |
+| `smoke`       | Playwright + dist      | Cada push/PR      |
+| Lighthouse    | Lighthouse CI          | Workflow aparte   |
+| Accessibility | axe-core               | En smoke          |
 
 ### Producción
 

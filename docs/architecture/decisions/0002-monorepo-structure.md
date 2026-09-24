@@ -1,5 +1,11 @@
 # ADR 002: Estructura Monorepo — Turborepo + pnpm Workspaces
 
+### Propósito de este documento
+
+- **Objetivos:** Registrar por qué el repo es un monorepo pnpm + Turborepo (`apps/web`, `apps/cms`, `packages/`).
+- **Estructura:** Metadatos → contexto → decisión → consecuencias.
+- **Contenido a integrar según contexto:** Conserva la estructura de producto. No copies un monorepo de landing/SaaS.
+
 | Campo               | Valor                               |
 | ------------------- | ----------------------------------- |
 | **Fecha**           | 2026-07-13                          |

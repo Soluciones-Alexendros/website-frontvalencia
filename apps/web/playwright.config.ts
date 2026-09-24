@@ -1,7 +1,10 @@
+import { existsSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
 import { defineConfig, devices } from '@playwright/test'
 
 const PORT = 4321
 const BASE_URL = `http://localhost:${PORT}`
+const hasDist = existsSync(fileURLToPath(new URL('./dist', import.meta.url)))
 
 export default defineConfig({
   testDir: './e2e',
@@ -19,7 +22,7 @@ export default defineConfig({
     { name: 'mobile', use: { ...devices['Pixel 5'] } },
   ],
   webServer: {
-    command: 'pnpm run build && pnpm run preview',
+    command: hasDist ? 'pnpm run preview' : 'pnpm run build && pnpm run preview',
     url: BASE_URL,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,

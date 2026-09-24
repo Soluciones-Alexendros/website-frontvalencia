@@ -1,5 +1,11 @@
 # Código de Conducta para Contribuyentes
 
+### Propósito de este documento
+
+- **Objetivos:** Declarar el estándar de conducta de la comunidad (Contributor Covenant 2.1) y el canal de denuncia.
+- **Estructura:** Compromiso → estándares → aplicación → atribución.
+- **Contenido a integrar según contexto:** Conserva el texto del Covenant. El canal de denuncia de este repo es el correo de la comunidad; las vulnerabilidades van a `SECURITY.md`, no aquí.
+
 ## Nuestro compromiso
 
 Nosotros, como miembros, contribuyentes y administradores, nos comprometemos a hacer de la participación en nuestra comunidad una experiencia libre de acoso para **todas las personas**, independientemente de su edad, cuerpo, discapacidad visible o invisible, etnia, características sexuales, identidad y expresión de género, nivel de experiencia, educación, estatus socioeconómico, nacionalidad, apariencia personal, raza, casta, religión o identidad y orientación sexuales.

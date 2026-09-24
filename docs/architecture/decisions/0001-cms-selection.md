@@ -1,5 +1,11 @@
 # ADR 001: Selección de CMS — Payload CMS
 
+### Propósito de este documento
+
+- **Objetivos:** Registrar por qué el CMS canónico es Payload (self-hosted, Postgres, i18n) y no Strapi/Sanity.
+- **Estructura:** Metadatos → contexto → decisión → consecuencias.
+- **Contenido a integrar según contexto:** Conserva la decisión de producto. No copies un CMS de otro repo. Un cambio de CMS exige un ADR nuevo que superseda este.
+
 | Campo               | Valor                               |
 | ------------------- | ----------------------------------- |
 | **Fecha**           | 2026-07-13                          |
