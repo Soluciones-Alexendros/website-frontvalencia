@@ -1,17 +1,27 @@
-import type { Metadata } from 'next'
-import configPromise from '@payload-config'
-import { RootLayout } from '@payloadcms/next/layouts'
+import type { ServerFunctionClient } from 'payload'
+import React from 'react'
+import config from '@payload-config'
+import { handleServerFunctions, RootLayout } from '@payloadcms/next/layouts'
+import { importMap } from './importMap'
+import '@payloadcms/next/css'
 
 type Args = {
   children: React.ReactNode
-  params: Promise<{ params: string[] }>
 }
 
-export const metadata: Metadata = {
-  title: 'FRONT CMS',
-  description: 'Payload CMS — FRONT Valencia',
+const serverFunction: ServerFunctionClient = async function (args) {
+  'use server'
+  return handleServerFunctions({
+    ...args,
+    config,
+    importMap,
+  })
 }
 
-const Layout = ({ children, params }: Args) => RootLayout({ children, config: configPromise, params, importMap: {} })
+const Layout = ({ children }: Args) => (
+  <RootLayout config={config} importMap={importMap} serverFunction={serverFunction}>
+    {children}
+  </RootLayout>
+)
 
 export default Layout

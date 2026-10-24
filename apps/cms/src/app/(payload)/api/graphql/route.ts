@@ -1,5 +1,5 @@
-import configPromise from '@payload-config'
-import { GET as GETHandler, POST as POSTHandler } from '@payloadcms/next/routes'
+import config from '@payload-config'
+import { GRAPHQL_PLAYGROUND_GET, GRAPHQL_POST } from '@payloadcms/next/routes'
 
-export const GET = GETHandler(configPromise)
-export const POST = POSTHandler(configPromise)
+export const GET = GRAPHQL_PLAYGROUND_GET(config)
+export const POST = GRAPHQL_POST(config)

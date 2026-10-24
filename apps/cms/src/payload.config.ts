@@ -2,7 +2,6 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import { buildConfig } from 'payload'
 import { postgresAdapter } from '@payloadcms/db-postgres'
-import { nextAppPrefix } from '@payloadcms/next'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
@@ -15,9 +14,6 @@ import { SiteConfig } from './globals/SiteConfig'
 
 // Plugins
 import { r2Storage } from './plugins/r2-storage'
-
-// Hooks
-import { revalidateWebhook } from './hooks/revalidateWebhook'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -49,7 +45,6 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI ?? '',
     },
     push: true,
-    prodMigration: 'error',
   }),
   collections: [Users, Allergens, MenuCategory, MenuItem, Space, Events, Media],
   globals: [SiteConfig],
@@ -57,12 +52,13 @@ export default buildConfig({
     r2Storage,
     seoPlugin({
       collections: ['menu-items', 'spaces', 'events'],
-      overrides: { fields: [] },
+      fields: ({ defaultFields }) => defaultFields,
     }),
     redirectsPlugin({
       collections: ['pages'],
       overrides: {
-        fields: [
+        fields: ({ defaultFields }) => [
+          ...defaultFields,
           {
             name: 'locale',
             type: 'select',
@@ -85,17 +81,8 @@ export default buildConfig({
   },
   defaultDepth: 2,
   maxDepth: 5,
-  rateLimit: {
-    max: 100,
-    window: 60 * 1000,
-  },
   jobs: {
-    autoRun: true,
-    queue: 'default',
-  },
-  index: {
-    search: true,
-    collections: ['menu-items', 'spaces', 'events'],
+    autoRun: [{ cron: '* * * * *', queue: 'default' }],
   },
   upload: {
     limits: {

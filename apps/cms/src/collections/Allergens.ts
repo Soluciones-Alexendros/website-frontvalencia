@@ -12,7 +12,6 @@ export const Allergens: CollectionConfig = {
     group: { es: 'Carta', en: 'Menu' },
     useAsTitle: 'name',
     defaultColumns: ['code', 'name', 'icon'],
-    order: 'asc',
   },
   access: {
     create: isAdminOrEditor,
