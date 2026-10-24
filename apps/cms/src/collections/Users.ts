@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { isAdmin } from '../access/isAdmin'
+import { isAdmin, isAdminBoolean, isAdminField } from '../access/isAdmin'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -17,7 +17,7 @@ export const Users: CollectionConfig = {
       return req.user.id === id
     },
     delete: isAdmin,
-    admin: ({ req }) => isAdmin({ req }),
+    admin: isAdminBoolean,
   },
   auth: {
     tokenExpiration: 60 * 60 * 24 * 7, // 7 días
@@ -45,8 +45,8 @@ export const Users: CollectionConfig = {
       hasMany: true,
       access: {
         // Solo admins pueden leer/asignar roles
-        read: ({ req }) => isAdmin({ req }),
-        update: ({ req }) => isAdmin({ req }),
+        read: isAdminField,
+        update: isAdminField,
       },
     },
     {
@@ -57,7 +57,7 @@ export const Users: CollectionConfig = {
         condition: (data) => data?.roles?.includes('admin'),
       },
       access: {
-        read: ({ req }) => isAdmin({ req }),
+        read: isAdminField,
       },
     },
   ],

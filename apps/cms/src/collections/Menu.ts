@@ -87,7 +87,6 @@ export const MenuCategory: CollectionConfig = {
     group: { es: 'Carta', en: 'Menu' },
     useAsTitle: 'name',
     defaultColumns: ['name', 'time', 'order'],
-    order: 'asc',
   },
   access: {
     create: isAdminOrEditor,

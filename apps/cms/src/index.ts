@@ -1,7 +1,9 @@
 import { getPayload } from 'payload'
 import config from './payload.config'
 
-let cached: ReturnType<typeof getPayload> | null = null
+type PayloadClient = Awaited<ReturnType<typeof getPayload>>
+
+let cached: PayloadClient | null = null
 
 /**
  * Singleton de Payload para uso en scripts y endpoints.
