@@ -20,6 +20,7 @@ import { readFileSync, mkdirSync, writeFileSync, existsSync, statSync } from 'fs
 import { join, extname } from 'path'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
+import { resolveSafePath } from './safe-path.mjs'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -60,16 +61,24 @@ function getMimeType(path) {
 function startServer(distPath) {
   return new Promise((resolve) => {
     const server = createServer((req, res) => {
-      let filePath = join(distPath, req.url === '/' ? '/index.html' : req.url)
-
-      // Remove query strings
-      filePath = filePath.split('?')[0]
+      let filePath = resolveSafePath(distPath, req.url ?? '/')
+      if (!filePath) {
+        res.writeHead(403)
+        res.end('Forbidden')
+        return
+      }
 
       // Try to serve the file
       if (existsSync(filePath)) {
         const stat = statSync(filePath)
         if (stat.isDirectory()) {
-          filePath = join(filePath, 'index.html')
+          const dirIndex = resolveSafePath(filePath, 'index.html')
+          if (!dirIndex) {
+            res.writeHead(403)
+            res.end('Forbidden')
+            return
+          }
+          filePath = dirIndex
         }
       }
 
