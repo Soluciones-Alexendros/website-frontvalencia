@@ -34,13 +34,6 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
-    build: {
-      rollupOptions: {
-        output: {
-          manualChunks: { react: ['react', 'react-dom'] },
-        },
-      },
-    },
   },
 
   prefetch: { prefetchAll: true, defaultStrategy: 'viewport' },
