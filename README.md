@@ -73,12 +73,12 @@ website-frontvalencia/
 │   └── web/            # Astro + React (páginas ES/EN, componentes, estilos)
 ├── packages/types/     # Tipos TypeScript compartidos
 ├── docs/               # ADRs (architecture/decisions), guías y runbooks
-└── .github/workflows/  # CI (quality/test/build/smoke) y releases
+└── .github/workflows/  # CI (quality/test/build/smoke/secrets/sca) y releases
 ```
 
 ## Despliegue y releases
 
-Cada push a `main` ejecuta el pipeline (`quality`, `test`, `build`, `smoke`) y despliega
+Cada push a `main` ejecuta el pipeline (`quality`, `test`, `build`, `smoke`, `secrets`, `sca`) y despliega
 la web en Vercel. El versionado es automático con
 [Changesets](https://github.com/changesets/changesets): al mergear cambios con un
 changeset se abre un PR `ci: version packages` que, al fusionarse, actualiza la
@@ -86,7 +86,7 @@ versión, el `CHANGELOG` y crea el tag y la GitHub Release correspondientes.
 
 **Contratos:** [AGENTS](AGENTS.md) · [ARCHITECTURE](ARCHITECTURE.md) · [DECISIONS](DECISIONS.md) · [docs/](docs/) · [CONTRIBUTING](CONTRIBUTING.md) · [SECURITY](SECURITY.md) · [SUPPORT](SUPPORT.md) · [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md)
 
-CI principal: jobs `quality`, `test`, `build`, `smoke`. Release (Changesets) y Lighthouse quedan en workflows aparte.
+CI principal: jobs `quality`, `test`, `build`, `smoke`, `secrets`, `sca`. Release (Changesets) y Lighthouse quedan en workflows aparte.
 
 ## Contribuir
 
