@@ -1,0 +1,7 @@
+# OSV-Scanner config for website-frontvalencia.
+# Gate in CI fails on any remaining finding. Medium CVEs without a safe
+# production patch are listed here with written justification (Ronda 2).
+
+[[IgnoredVulns]]
+id = "GHSA-67mh-4wv8-2f99"
+reason = "Medium (CVSS 5.3). esbuild 0.18.20 is pulled only by deprecated @esbuild-kit/core-utils (Payload/CMS toolchain). Affects the esbuild development server, not the static Astro production site on Vercel. Overriding to >=0.25 breaks @esbuild-kit; no production runtime exposure."
