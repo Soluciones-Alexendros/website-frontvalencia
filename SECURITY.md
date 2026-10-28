@@ -105,6 +105,7 @@ Se utiliza `validate:env` en CI para verificar que todas las variables requerida
 - Renovate (`.github/renovate.json`) cubre `npm` y `github-actions`. No hay Dependabot de version-updates.
 - Los grupos de dependencias se actualizan juntos para minimizar riesgos de compatibilidad.
 - `sharp` está congelado en `>=0.35.3, <0.36.0` para evitar breaking changes en entornos serverless.
+- CI (`ci.yml`): job `secrets` (gitleaks v8.30.1, binario con checksum) y job `sca` (`pnpm audit --prod --audit-level=high` + OSV-Scanner sobre `pnpm-lock.yaml`), sin `continue-on-error`.
 
 ### 8. Entorno de producción
 

@@ -62,7 +62,7 @@ pnpm --filter frontvalencia-web build
 pnpm --filter frontvalencia-web exec playwright test --project=chromium
 ```
 
-CI principal (`.github/workflows/ci.yml`): jobs `quality`, `test`, `build`, `smoke`. Release y Lighthouse quedan en workflows aparte.
+CI principal (`.github/workflows/ci.yml`): jobs `quality`, `test`, `build`, `smoke`, `secrets`, `sca`. Release y Lighthouse quedan en workflows aparte.
 
 ## Convenciones
 
@@ -86,6 +86,18 @@ tests/          unitarios de raíz + e2e históricos
 ## Definition of Done
 
 - Criterios de la traza cumplidos
-- Jobs `quality`, `test`, `build` y `smoke` verdes
+- Jobs `quality`, `test`, `build`, `smoke`, `secrets` y `sca` verdes
 - Docs canónicos actualizados si cambia el contrato
 - Sin secretos en el diff
+
+## Learned User Preferences
+
+- Renovate es el único bot de dependencias; Dependabot solo para alertas (no añadir `dependabot.yml`).
+- Auto-merge con merge commit (no squash/rebase); no reactivar `required_linear_history` en `main` sin confirmación (bloquea esa política).
+- Cambios que exijan Settings de GitHub, Vercel, DNS o cuentas: dejarlos como tarea explícita para Alejandro (no asumir acceso).
+
+## Learned Workspace Facts
+
+- Clone de trabajo `Portales/frontvalencia` ↔ GitHub `Soluciones-Alexendros/website-frontvalencia`; producción `https://website-frontvalencia.vercel.app`.
+- Al tocar CI, `renovate.json`, `SECURITY.md` o `CODEOWNERS`, alinear con `Soluciones-Alexendros/repo-standard`.
+- Astro 7 exige Node engines `>=22.23.4` (piso documentado en `package.json` / `.nvmrc`).

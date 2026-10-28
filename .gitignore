@@ -73,3 +73,4 @@ package.old.json
 
 # Playwright MCP artifacts
 .playwright-mcp/
+.pnpm-store/

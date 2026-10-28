@@ -3,10 +3,10 @@
 ### Propósito de este documento
 
 - **Objetivos:** Diagnosticar jobs rojos del pipeline principal y el ciclo Changesets sin tocar org settings ni branch protection.
-- **Estructura:** Fallos `quality` / `test` / `build` / `smoke` → release (Changesets) → Renovate.
+- **Estructura:** Fallos `quality` / `test` / `build` / `smoke` / `secrets` / `sca` → release (Changesets) → Renovate.
 - **Contenido a integrar según contexto:** Adapta comandos y secretos de este repo (`GITHUB_TOKEN`). No copies semantic-release de otra CLI. No hagas force-push.
 
-## Jobs `quality` / `test` / `build` / `smoke` en rojo
+## Jobs `quality` / `test` / `build` / `smoke` / `secrets` / `sca` en rojo
 
 1. Reproduce en local los comandos de [calidad](../guides/calidad.md).
 2. `quality` + format: `pnpm run format` sobre contratos y vuelve a `format:check`.
@@ -14,6 +14,8 @@
 4. `test`: `pnpm --filter frontvalencia-web run test:unit`.
 5. `build`: `pnpm --filter frontvalencia-web build` y confirma `apps/web/dist/`.
 6. `smoke` + Playwright: el job reutiliza el artefacto; en local, `pnpm --filter frontvalencia-web exec playwright test --project=chromium`.
+7. `secrets`: binario gitleaks v8.30.1 con checksum; `./gitleaks detect --source . --redact --verbose`.
+8. `sca`: `pnpm audit --prod --audit-level=high` y OSV-Scanner sobre `pnpm-lock.yaml`.
 
 No hagas force-push para «arreglar» CI. No toques `release.yml` ni ajustes de organización.
 
