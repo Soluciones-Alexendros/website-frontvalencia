@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
-    "astro": "7.4.2",
+    "astro": "7.4.7",
     "geist": "^1.7.2",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
