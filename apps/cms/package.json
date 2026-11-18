@@ -33,7 +33,7 @@
     "@payloadcms/ui": "3.90.2",
     "cross-env": "^7.0.3",
     "graphql": "^16.10.0",
-    "next": "16.4.3",
+    "next": "16.4.5",
     "payload": "3.90.2",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
