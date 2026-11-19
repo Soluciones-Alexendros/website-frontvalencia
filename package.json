@@ -6,7 +6,7 @@
   "description": "FRONT Valencia — Restaurante y Terraza en La Marina de Valencia. TypeScript monorepo (Payload CMS + Astro).",
   "packageManager": "pnpm@8.15.0",
   "engines": {
-    "node": ">=22.23.4",
+    "node": "24.x",
     "pnpm": ">=8.15.0"
   },
   "scripts": {
@@ -48,10 +48,18 @@
     "typescript": "^5.8.0"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx,mjs,cjs}": ["prettier --write"],
-    "*.json": ["prettier --write"],
-    "*.css": ["prettier --write"],
-    "*.md": ["prettier --write"]
+    "*.{ts,tsx,js,jsx,mjs,cjs}": [
+      "prettier --write"
+    ],
+    "*.json": [
+      "prettier --write"
+    ],
+    "*.css": [
+      "prettier --write"
+    ],
+    "*.md": [
+      "prettier --write"
+    ]
   },
   "keywords": [
     "astro",
